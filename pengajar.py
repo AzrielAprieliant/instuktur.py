@@ -49,6 +49,7 @@ else:
     # Urutkan berdasarkan Rata-Rata tertinggi
     filtered_df = filtered_df.sort_values(by="Rata-Rata", ascending=False)
 
+    filtered_df = filtered_df.reset_index(drop=True)  # reset index biar rapi
     filtered_df.insert(0, "Ranking", range(1, len(filtered_df) + 1))
 
     # Pilih kolom yang ditampilkan
