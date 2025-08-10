@@ -27,36 +27,6 @@ df_filtered = df[
     (df["Mata Ajar"] == mata_ajar)
 ]
 
-# ===== CSS Styling Tabel =====
-table_style = """
-<style>
-.table-container {
-    max-height: 500px; 
-    overflow-y: auto;
-    border: 2px solid black;
-    background-color: white;
-}
-.styled-table {
-    border-collapse: collapse;
-    font-size: 16px;
-    font-family: sans-serif;
-    width: 100%;
-    background-color: white;
-    color: black;
-}
-.styled-table th, .styled-table td {
-    border: 1px solid black;
-    padding: 8px 12px;
-    text-align: left;
-    background-color: white;
-    color: black;
-}
-.styled-table th {
-    background-color: white;
-    color: black;
-}
-</style>
-"""
 
 # ===== Tampilkan Tabel =====
 if not df_filtered.empty:
