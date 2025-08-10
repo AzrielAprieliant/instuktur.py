@@ -26,7 +26,7 @@ if "Tahun" not in df.columns:
             df["Tahun"] = pd.to_datetime(df[col]).dt.year
             break
 
-# Dropdown
+# Dropdown filter
 diklat_list = sorted(df["Nama Diklat"].dropna().unique().tolist())  # tanpa "Semua"
 unit_list = ["Semua"] + sorted(df["Nama Unit"].dropna().unique().tolist())
 mata_ajar_list = ["Semua"] + sorted(df["Mata Ajar"].dropna().unique().tolist())
@@ -42,6 +42,17 @@ if selected_unit != "Semua":
     filtered_df = filtered_df[filtered_df["Nama Unit"] == selected_unit]
 if selected_mata_ajar != "Semua":
     filtered_df = filtered_df[filtered_df["Mata Ajar"] == selected_mata_ajar]
+
+# Hapus kolom 'Kelas' jika ada
+if "Kelas" in filtered_df.columns:
+    filtered_df = filtered_df.drop(columns=["Kelas"])
+
+# Urutkan berdasarkan nilai tertinggi (asumsi kolom 'Nilai' ada)
+if "Nilai" in filtered_df.columns:
+    filtered_df = filtered_df.sort_values(by="Nilai", ascending=False)
+
+# Reset index agar rapi
+filtered_df.reset_index(drop=True, inplace=True)
 
 # Tampilkan hasil
 st.dataframe(filtered_df)
