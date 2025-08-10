@@ -9,6 +9,9 @@ st.markdown(
     .stApp {
         background-color: white;
     }
+    h1, h2, h3, h4, h5, h6 {
+        color: black !important; /* Supaya judul terlihat di background putih */
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -43,13 +46,20 @@ if selected_unit != "Semua":
 if selected_mata_ajar != "Semua":
     filtered_df = filtered_df[filtered_df["Mata Ajar"] == selected_mata_ajar]
 
-# Hapus kolom 'Kelas' jika ada
-if "Kelas" in filtered_df.columns:
-    filtered_df = filtered_df.drop(columns=["Kelas", "Sumber Sheet"])
+# Hapus kolom yang tidak diperlukan
+for col in ["Kelas", "Sumber Sheet"]:
+    if col in filtered_df.columns:
+        filtered_df = filtered_df.drop(columns=[col])
 
-# Urutkan berdasarkan nilai tertinggi (asumsi kolom 'Nilai' ada)
-if "Nilai" in filtered_df.columns:
-    filtered_df = filtered_df.sort_values(by="Nilai", ascending=False)
+# Urutkan berdasarkan nilai tertinggi
+if "Rata-Rata" in filtered_df.columns:
+    filtered_df = filtered_df.sort_values(by="Rata-Rata", ascending=False)
+
+# Pindahkan kolom Nama Unit supaya tidak di paling ujung
+if "Nama Unit" in filtered_df.columns:
+    cols = filtered_df.columns.tolist()
+    cols.insert(4, cols.pop(cols.index("Nama Unit")))  # pindahkan ke posisi index 1
+    filtered_df = filtered_df[cols]
 
 # Reset index agar rapi
 filtered_df.reset_index(drop=True, inplace=True)
