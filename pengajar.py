@@ -65,5 +65,7 @@ filtered_df = filtered_df[[kol for kol in kolom_urut if kol in filtered_df.colum
 # Reset index
 filtered_df.reset_index(drop=True, inplace=True)
 
+st.subheader("📋 Data Instruktur Nilai Tertinggi")
+
 # Tampilkan hasil
 st.dataframe(filtered_df)
