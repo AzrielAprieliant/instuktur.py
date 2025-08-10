@@ -1,61 +1,76 @@
 import streamlit as st
 import pandas as pd
 
-# Konfigurasi halaman
-st.set_page_config(page_title="Dashboard Pengajar Nilai Tertinggi", layout="wide")
+# =====================
+# KONFIGURASI TEMA PUTIH
+# =====================
+st.set_page_config(
+    page_title="Dashboard Pengajar Nilai Tertinggi",
+    layout="wide"
+)
 
-# CSS untuk background putih dan tabel border
+# CSS untuk memastikan background putih
 st.markdown("""
     <style>
-    .main {
+    .stApp {
         background-color: white;
         color: black;
-    }
-    table.styled-table {
-        border-collapse: collapse;
-        margin: 20px 0;
-        font-size: 16px;
-        min-width: 400px;
-        border: 1px solid #dddddd;
-    }
-    table.styled-table th, table.styled-table td {
-        border: 1px solid #dddddd;
-        padding: 8px 12px;
-        text-align: left;
-        color: black;
-        background-color: white;
-    }
-    table.styled-table th {
-        background-color: #f2f2f2;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# Load data
+# =====================
+# LOAD DATA
+# =====================
+# Ganti file ini dengan file Excel kamu
 df = pd.read_excel("Penilaian Gabung dengan Nama Unit.xlsx")
 
-# Hilangkan kolom sumber sheet jika ada
-if "Sumber Sheet" in df.columns:
-    df = df.drop(columns=["Sumber Sheet"])
+# Pastikan kolom sesuai
+# Contoh kolom: Nama Diklat, Nama Unit, Mata Ajar, Pengajar, Rata-Rata
+# Ubah sesuai nama kolom sebenarnya di file Excel kamu
+df["Rata-Rata"] = pd.to_numeric(df["Rata-Rata"], errors="coerce")
 
-# Dropdown 1: Nama Diklat (semua muncul)
-pilihan_diklat = st.selectbox("Pilih Nama Diklat", sorted(df["Nama Diklat"].unique().tolist()))
+# =====================
+# FILTER DROPDOWN
+# =====================
+col1, col2, col3 = st.columns(3)
 
-# Filter berdasarkan diklat
-df_filtered = df[df["Nama Diklat"] == pilihan_diklat]
+# 1. Nama Diklat (tidak memfilter)
+with col1:
+    nama_diklat = st.selectbox(
+        "Nama Diklat",
+        sorted(df["Nama Diklat"].unique())
+    )
 
-# Dropdown 2: Nama Unit (hanya yang ada di diklat terpilih)
-pilihan_unit = st.selectbox("Pilih Nama Unit", sorted(df_filtered["Nama Unit"].unique().tolist()))
-df_filtered = df_filtered[df_filtered["Nama Unit"] == pilihan_unit]
+# 2. Nama Unit (memfilter)
+with col2:
+    unit_options = ["Semua"] + sorted(df["Nama Unit"].unique())
+    nama_unit = st.selectbox("Nama Unit", unit_options)
 
-# Dropdown 3: Mata Ajar (hanya yang ada di unit terpilih)
-pilihan_mata = st.selectbox("Pilih Mata Ajar", sorted(df_filtered["Mata Ajar"].unique().tolist()))
-df_filtered = df_filtered[df_filtered["Mata Ajar"] == pilihan_mata]
+# 3. Mata Ajar (memfilter)
+with col3:
+    mata_ajar_options = ["Semua"] + sorted(df["Mata Ajar"].unique())
+    mata_ajar = st.selectbox("Mata Ajar", mata_ajar_options)
 
-# Urutkan berdasarkan nilai tertinggi
-if "Nilai" in df_filtered.columns:
-    df_filtered = df_filtered.sort_values(by="Nilai", ascending=False)
+# =====================
+# APLIKASI FILTER
+# =====================
+df_filtered = df.copy()
 
-# Tampilkan tabel dengan border
-html_table = df_filtered.to_html(classes="styled-table", index=False)
-st.markdown(html_table, unsafe_allow_html=True)
+if nama_unit != "Semua":
+    df_filtered = df_filtered[df_filtered["Nama Unit"] == nama_unit]
+
+if mata_ajar != "Semua":
+    df_filtered = df_filtered[df_filtered["Mata Ajar"] == mata_ajar]
+
+# =====================
+# TAMPILKAN HASIL
+# =====================
+st.subheader(f"Pengajar Nilai Tertinggi - {nama_diklat}")
+
+if df_filtered.empty:
+    st.warning("Tidak ada data untuk filter ini.")
+else:
+    # Urutkan berdasarkan nilai rata-rata
+    df_top = df_filtered.sort_values("Rata-Rata", ascending=False).head(10)
+    st.dataframe(df_top, use_container_width=True)
