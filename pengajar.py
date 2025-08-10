@@ -49,6 +49,8 @@ else:
     # Urutkan berdasarkan Rata-Rata tertinggi
     filtered_df = filtered_df.sort_values(by="Rata-Rata", ascending=False)
 
+    filtered_df.insert(0, "Ranking", range(1, len(filtered_df) + 1))
+
     # Pilih kolom yang ditampilkan
     show_df = filtered_df[["Instruktur", "Nama Diklat", "Mata Ajar", "Nama Unit", "Tahun", "Rata-Rata"]]
 
