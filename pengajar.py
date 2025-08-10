@@ -45,7 +45,7 @@ if selected_mata_ajar != "Semua":
 
 # Hapus kolom 'Kelas' jika ada
 if "Kelas" in filtered_df.columns:
-    filtered_df = filtered_df.drop(columns=["Kelas"])
+    filtered_df = filtered_df.drop(columns=["Kelas", "Sumber Sheet"])
 
 # Urutkan berdasarkan nilai tertinggi (asumsi kolom 'Nilai' ada)
 if "Nilai" in filtered_df.columns:
