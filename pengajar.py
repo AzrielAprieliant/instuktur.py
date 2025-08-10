@@ -1,77 +1,71 @@
 import streamlit as st
 import pandas as pd
 
-# Konfigurasi halaman (warna putih)
-st.set_page_config(page_title="Dashboard Penilaian", layout="wide")
-st.markdown(
-    """
-    <style>
-    .stApp {
-        background-color: white;
-    }
-    h1, h2, h3, h4, h5, h6 {
-        color: black !important; /* Supaya judul terlihat di background putih */
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
 
+st.set_page_config(page_title="Dashboard Instruktur", layout="wide", initial_sidebar_state="collapsed")
 st.title("📊 Dashboard Penilaian Instruktur")
 
-# Load data Excel
+
 df = pd.read_excel("Penilaian Gabung dengan Nama Unit.xlsx")
 
-df["Rata-Rata"] = pd.to_numeric(df["Rata-Rata"], errors="coerce")
-df = df[df["Rata-Rata"] <= 10]
 
-# Format dua desimal
-df["Rata-Rata"] = df["Rata-Rata"].round(2)
+df = df.rename(columns={
+    "Nama": "Nama",
+    "Nama Diklat": "Nama Diklat",
+    "Mata Ajar": "Mata Ajar",
+    "Nama Unit": "Nama Unit",
+    "Tahun": "Tahun",
+    "Rata-Rata": "Nilai"
+})
 
-# Pastikan kolom Tahun ada
-if "Tahun" not in df.columns:
-    for col in df.columns:
-        if "tgl" in col.lower() or "tanggal" in col.lower():
-            df["Tahun"] = pd.to_datetime(df[col]).dt.year
-            break
+# Perbaiki nilai agar tidak ada angka aneh
+df["Nilai"] = pd.to_numeric(df["Nilai"], errors="coerce")
+df = df[df["Nilai"].between(0, 5)] 
 
-# Dropdown filter
-diklat_list = sorted(df["Nama Diklat"].dropna().unique().tolist())  # tanpa "Semua"
-unit_list = ["Semua"] + sorted(df["Nama Unit"].dropna().unique().tolist())
-mata_ajar_list = ["Semua"] + sorted(df["Mata Ajar"].dropna().unique().tolist())
 
-selected_diklat = st.selectbox("Pilih Nama Diklat", diklat_list)
-selected_unit = st.selectbox("Pilih Nama Unit", unit_list)
-selected_mata_ajar = st.selectbox("Pilih Mata Ajar", mata_ajar_list)
+pilihan_diklat = st.selectbox("Pilih Nama Diklat", ["Semua"] + sorted(df["Nama Diklat"].unique().tolist()))
 
-# Filter data
-filtered_df = df[df["Nama Diklat"] == selected_diklat]
 
-if selected_unit != "Semua":
-    filtered_df = filtered_df[filtered_df["Nama Unit"] == selected_unit]
-if selected_mata_ajar != "Semua":
-    filtered_df = filtered_df[filtered_df["Mata Ajar"] == selected_mata_ajar]
+if pilihan_diklat != "Semua":
+    df_filtered = df[df["Nama Diklat"] == pilihan_diklat]
+    pilihan_unit = st.selectbox("Pilih Nama Unit", ["Semua"] + sorted(df_filtered["Nama Unit"].unique().tolist()))
+    pilihan_mata = st.selectbox("Pilih Mata Ajar", ["Semua"] + sorted(df_filtered["Mata Ajar"].unique().tolist()))
+else:
+    df_filtered = df.copy()
+    pilihan_unit = st.selectbox("Pilih Nama Unit", ["Semua"] + sorted(df["Nama Unit"].unique().tolist()))
+    pilihan_mata = st.selectbox("Pilih Mata Ajar", ["Semua"] + sorted(df["Mata Ajar"].unique().tolist()))
 
-# Hapus kolom yang tidak diperlukan
-for col in ["Kelas", "Sumber Sheet"]:
-    if col in filtered_df.columns:
-        filtered_df = filtered_df.drop(columns=[col])
 
-# Urutkan berdasarkan nilai tertinggi (kolom "Rata-Rata")
-if "Rata-Rata" in filtered_df.columns:
-    filtered_df = filtered_df.sort_values(by="Rata-Rata", ascending=False)
+if pilihan_unit != "Semua":
+    df_filtered = df_filtered[df_filtered["Nama Unit"] == pilihan_unit]
 
-# Tambahkan kolom Ranking
-filtered_df.insert(0, "Ranking", range(1, len(filtered_df) + 1))
 
-# Atur urutan kolom
-kolom_urut = ["Ranking", "Instruktur", "Nama Diklat", "Mata Ajar", "Nama Unit", "Tahun", "Rata-Rata"]
-filtered_df = filtered_df[[kol for kol in kolom_urut if kol in filtered_df.columns]]
+if pilihan_mata != "Semua":
+    df_filtered = df_filtered[df_filtered["Mata Ajar"] == pilihan_mata]
 
-# Reset index
-filtered_df.reset_index(drop=True, inplace=True)
+
+df_filtered = df_filtered.sort_values(by="Nilai", ascending=False)
+df_filtered.insert(0, "Ranking", range(1, len(df_filtered) + 1))
+
+
+df_filtered = df_filtered[["Ranking", "Nama", "Nama Diklat", "Mata Ajar", "Nama Unit", "Tahun", "Nilai"]]
+
 
 st.subheader("📋 Data Instruktur Nilai Tertinggi")
 
-# Tampilkan hasil
-st.dataframe(filtered_df)
+
+st.markdown("""
+<style>
+table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 2px solid white;
+}
+th, td {
+    border: 1px solid white;
+    padding: 8px;
+}
+</style>
+""", unsafe_allow_html=True)
+
+st.dataframe(df_filtered, use_container_width=True)
