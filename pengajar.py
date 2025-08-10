@@ -3,14 +3,8 @@ import pandas as pd
 import plotly.express as px
 import traceback
 
-# ===============================
-# Konfigurasi halaman
-# ===============================
 st.set_page_config(page_title="Dashboard Instruktur", layout="wide", initial_sidebar_state="collapsed")
 
-# ===============================
-# CSS kecil untuk selectbox + background putih
-# ===============================
 st.markdown("""
 <style>
 /* Pastikan background putih */
@@ -26,7 +20,7 @@ section[data-testid="stSidebar"] {
 
 /* Selectbox: lebar & tinggi lebih kecil */
 div[data-testid="stSelectbox"] {
-    width: 220px !important;
+    width: 300px !important;
 }
 div[data-baseweb="select"] > div {
     min-height: 30px !important;
