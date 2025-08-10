@@ -1,47 +1,47 @@
 import streamlit as st
 import pandas as pd
 
-# Konfigurasi halaman
-st.set_page_config(page_title="📊 Dashboard Penilaian Instruktur", layout="wide", initial_sidebar_state="collapsed")
+# Konfigurasi halaman (warna putih)
+st.set_page_config(page_title="Dashboard Penilaian", layout="wide")
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background-color: white;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
-# CSS untuk memperlebar dropdown
-st.markdown("""
-<style>
-.stSelectbox [data-baseweb="select"] {
-    width: 300px !important;
-}
-</style>
-""", unsafe_allow_html=True)
-
-# Judul
 st.title("📊 Dashboard Penilaian Instruktur")
 
-# Load data
+# Load data Excel
 df = pd.read_excel("Penilaian Gabung dengan Nama Unit.xlsx")
 
-# Filter Tahun (dengan 'Semua')
-tahun_options = ["Semua"] + sorted(df["Tahun"].unique().tolist())
-tahun_filter = st.selectbox("Pilih Tahun:", tahun_options)
+# Pastikan kolom Tahun ada
+if "Tahun" not in df.columns:
+    for col in df.columns:
+        if "tgl" in col.lower() or "tanggal" in col.lower():
+            df["Tahun"] = pd.to_datetime(df[col]).dt.year
+            break
 
-# Filter Nama Diklat (tanpa 'Semua')
-diklat_options = sorted(df["Nama Diklat"].unique().tolist())
-diklat_filter = st.selectbox("Pilih Nama Diklat:", diklat_options)
+# Dropdown
+diklat_list = sorted(df["Nama Diklat"].dropna().unique().tolist())  # tanpa "Semua"
+unit_list = ["Semua"] + sorted(df["Nama Unit"].dropna().unique().tolist())
+mata_ajar_list = ["Semua"] + sorted(df["Mata Ajar"].dropna().unique().tolist())
 
-# Filter DataFrame
-df_filtered = df.copy()
-if tahun_filter != "Semua":
-    df_filtered = df_filtered[df_filtered["Tahun"] == tahun_filter]
+selected_diklat = st.selectbox("Pilih Nama Diklat", diklat_list)
+selected_unit = st.selectbox("Pilih Nama Unit", unit_list)
+selected_mata_ajar = st.selectbox("Pilih Mata Ajar", mata_ajar_list)
 
-df_filtered = df_filtered[df_filtered["Nama Diklat"] == diklat_filter]
+# Filter data
+filtered_df = df[df["Nama Diklat"] == selected_diklat]
 
-# Tampilkan data
-st.dataframe(df_filtered)
+if selected_unit != "Semua":
+    filtered_df = filtered_df[filtered_df["Nama Unit"] == selected_unit]
+if selected_mata_ajar != "Semua":
+    filtered_df = filtered_df[filtered_df["Mata Ajar"] == selected_mata_ajar]
 
-# Hitung nilai rata-rata dan peringkat
-ranking = df_filtered.groupby("Instruktur", as_index=False)["Rata-Rata"].mean()
-ranking["Peringkat"] = ranking["Rata-Rata"].rank(ascending=False, method="min").astype(int)
-ranking = ranking.sort_values(by="Peringkat")
-
-# Tampilkan ranking
-st.subheader("🏆 Peringkat Instruktur")
-st.dataframe(ranking)
+# Tampilkan hasil
+st.dataframe(filtered_df)
