@@ -3,31 +3,34 @@ import pandas as pd
 
 # Konfigurasi halaman (warna putih)
 st.set_page_config(page_title="Dashboard Penilaian", layout="wide")
-st.markdown(
-    """
-    <style>
-    .styled-table {
-        border-collapse: collapse;
-        margin: 10px 0;
-        font-size: 14px;
-        font-family: Arial, sans-serif;
-        min-width: 100%;
-        background-color: white; /* Background putih */
-        border: 2px solid black; /* Border box luar */
-    }
-    .styled-table th, .styled-table td {
-        border: 1px solid black; /* Border tiap sel */
-        padding: 8px;
-        text-align: left;
-    }
-    .styled-table th {
-        background-color: #f2f2f2;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
 
+table_style = """
+<style>
+.styled-table {
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-size: 16px;
+    font-family: sans-serif;
+    border: 2px solid black;
+    background-color: white;
+}
+.styled-table th, .styled-table td {
+    border: 1px solid black;
+    padding: 8px 12px;
+    text-align: left;
+    color: black;
+}
+.styled-table th {
+    background-color: white; /* Header putih */
+}
+</style>
+"""
+
+# Convert DataFrame ke HTML + apply class CSS
+html_table = df.to_html(classes="styled-table", index=False)
+
+# Tampilkan
+st.markdown(table_style + html_table, unsafe_allow_html=True)
 st.title("📊 Dashboard Penilaian Instruktur")
 
 # Load data Excel
