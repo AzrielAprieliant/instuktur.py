@@ -52,7 +52,7 @@ else:
     st.subheader("🏆 Pengajar Nilai Tertinggi")
     
    
-    st.dataframe(show_df.to_html(index=False), use_container_width=True)
+    st.dataframe(show_df.reset_index(drop=True), use_container_width=True)
 
    
     def convert_df(df):
