@@ -4,7 +4,7 @@ import pandas as pd
 # Konfigurasi halaman
 st.set_page_config(page_title="Dashboard Nilai Pengajar", layout="wide")
 
-# CSS untuk background putih dan judul hitam
+# CSS untuk background putih dan teks hitam
 st.markdown(
     """
     <style>
@@ -34,29 +34,31 @@ else:
     # Filter nilai maksimal 5
     df = df[df["Rata-Rata"] <= 5]
 
-    # Dropdown filter
+    # Dropdown Nama Diklat
     nama_diklat = st.selectbox("Pilih Nama Diklat", sorted(df["Nama Diklat"].dropna().unique().tolist()))
-    nama_unit = st.selectbox("Pilih Nama Unit", ["Semua"] + sorted(df["Nama Unit"].dropna().unique().tolist()))
-    mata_ajar = st.selectbox("Pilih Mata Ajar", ["Semua"] + sorted(df["Mata Ajar"].dropna().unique().tolist()))
 
-    # Filter data
-    filtered_df = df[df["Nama Diklat"] == nama_diklat]
+    # Filter sementara sesuai Diklat
+    df_diklat = df[df["Nama Diklat"] == nama_diklat]
+
+    # Dropdown Nama Unit sesuai Diklat
+    nama_unit = st.selectbox("Pilih Nama Unit", ["Semua"] + sorted(df_diklat["Nama Unit"].dropna().unique().tolist()))
+
+    # Dropdown Mata Ajar sesuai Diklat
+    mata_ajar = st.selectbox("Pilih Mata Ajar", ["Semua"] + sorted(df_diklat["Mata Ajar"].dropna().unique().tolist()))
+
+    # Filter final
+    filtered_df = df_diklat.copy()
     if nama_unit != "Semua":
         filtered_df = filtered_df[filtered_df["Nama Unit"] == nama_unit]
     if mata_ajar != "Semua":
         filtered_df = filtered_df[filtered_df["Mata Ajar"] == mata_ajar]
 
-    # Urutkan berdasarkan Rata-Rata tertinggi
-    filtered_df = filtered_df.sort_values(by="Rata-Rata", ascending=False)
-
-    filtered_df = filtered_df.reset_index(drop=True)  # reset index biar rapi
+    # Urutkan berdasarkan Rata-Rata tertinggi & tambahkan ranking
+    filtered_df = filtered_df.sort_values(by="Rata-Rata", ascending=False).reset_index(drop=True)
     filtered_df.insert(0, "Ranking", range(1, len(filtered_df) + 1))
 
-    # Pilih kolom yang ditampilkan
-    show_df = filtered_df[["Instruktur", "Nama Diklat", "Mata Ajar", "Nama Unit", "Tahun", "Rata-Rata"]]
-
-    # Judul sebelum tabel
-    st.subheader("📋 Hasil Data")
+    # Pilih kolom yang akan ditampilkan
+    show_df = filtered_df[["Ranking", "Instruktur", "Nama Diklat", "Mata Ajar", "Nama Unit", "Tahun", "Rata-Rata"]]
 
     # Tampilkan tabel
     st.dataframe(show_df, use_container_width=True)
