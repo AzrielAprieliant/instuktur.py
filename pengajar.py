@@ -4,21 +4,25 @@ import pandas as pd
 # Konfigurasi halaman
 st.set_page_config(page_title="Dashboard Nilai Pengajar", layout="wide")
 
-# CSS untuk background putih
+# CSS untuk background putih dan judul hitam
 st.markdown(
     """
     <style>
         .stApp {
             background-color: white;
         }
+        h1 {
+            color: black !important;
+        }
     </style>
     """,
     unsafe_allow_html=True
 )
 
+# Judul dashboard
 st.title("📊 Dashboard Nilai Pengajar Tertinggi")
 
-# Baca file Excel langsung dari nama file
+# Baca file Excel langsung
 file_path = "Penilaian Gabung dengan Nama Unit.xlsx"
 df = pd.read_excel(file_path)
 
@@ -31,14 +35,12 @@ else:
     df = df[df["Rata-Rata"] <= 5]
 
     # Dropdown filter
-    nama_diklat = st.selectbox("Pilih Nama Diklat", ["Semua"] + sorted(df["Nama Diklat"].dropna().unique().tolist()))
+    nama_diklat = st.selectbox("Pilih Nama Diklat", sorted(df["Nama Diklat"].dropna().unique().tolist()))
     nama_unit = st.selectbox("Pilih Nama Unit", ["Semua"] + sorted(df["Nama Unit"].dropna().unique().tolist()))
     mata_ajar = st.selectbox("Pilih Mata Ajar", ["Semua"] + sorted(df["Mata Ajar"].dropna().unique().tolist()))
 
     # Filter data
-    filtered_df = df.copy()
-    if nama_diklat != "Semua":
-        filtered_df = filtered_df[filtered_df["Nama Diklat"] == nama_diklat]
+    filtered_df = df[df["Nama Diklat"] == nama_diklat]
     if nama_unit != "Semua":
         filtered_df = filtered_df[filtered_df["Nama Unit"] == nama_unit]
     if mata_ajar != "Semua":
@@ -49,6 +51,9 @@ else:
 
     # Pilih kolom yang ditampilkan
     show_df = filtered_df[["Instruktur", "Nama Diklat", "Mata Ajar", "Nama Unit", "Tahun", "Rata-Rata"]]
+
+    # Judul sebelum tabel
+    st.subheader("📋 Hasil Data")
 
     # Tampilkan tabel
     st.dataframe(show_df, use_container_width=True)
