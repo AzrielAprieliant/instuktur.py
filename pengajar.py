@@ -60,6 +60,9 @@ else:
     # Pilih kolom yang akan ditampilkan
     show_df = filtered_df[["Ranking", "Instruktur", "Nama Diklat", "Mata Ajar", "Nama Unit", "Tahun", "Rata-Rata"]]
 
+    # Judul sebelum tabel
+    st.subheader("🏆 Pengajar Nilai Tertinggi")
+    
     # Tampilkan tabel
     st.dataframe(show_df, use_container_width=True)
 
