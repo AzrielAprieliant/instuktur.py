@@ -22,6 +22,12 @@ st.title("📊 Dashboard Penilaian Instruktur")
 # Load data Excel
 df = pd.read_excel("Penilaian Gabung dengan Nama Unit.xlsx")
 
+df["Rata-Rata"] = pd.to_numeric(df["Rata-Rata"], errors="coerce")
+df = df[df["Rata-Rata"] <= 10]
+
+# Format dua desimal
+df["Rata-Rata"] = df["Rata-Rata"].round(2)
+
 # Pastikan kolom Tahun ada
 if "Tahun" not in df.columns:
     for col in df.columns:
