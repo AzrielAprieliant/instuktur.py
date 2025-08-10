@@ -41,7 +41,7 @@ else:
     if nama_unit != "Semua":
         filtered_df = filtered_df[filtered_df["Nama Unit"] == nama_unit]
     if mata_ajar != "Semua":
-        filtered_df = filtered_df[filtered_df["Mata Ajar"] == 
+        filtered_df = filtered_df[filtered_df["Mata Ajar"] == selected_mata_ajar]
 
     filtered_df = filtered_df.sort_values(by="Rata-Rata", ascending=False).reset_index(drop=True)
     filtered_df.insert(0, "Ranking", range(1, len(filtered_df) + 1))
