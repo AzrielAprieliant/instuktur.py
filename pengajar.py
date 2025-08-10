@@ -6,11 +6,22 @@ st.set_page_config(page_title="Dashboard Penilaian", layout="wide")
 st.markdown(
     """
     <style>
-    .stApp {
-        background-color: white;
+    .styled-table {
+        border-collapse: collapse;
+        margin: 10px 0;
+        font-size: 14px;
+        font-family: Arial, sans-serif;
+        min-width: 100%;
+        background-color: white; /* Background putih */
+        border: 2px solid black; /* Border box luar */
     }
-    h1, h2, h3, h4, h5, h6 {
-        color: black !important; /* Supaya judul terlihat di background putih */
+    .styled-table th, .styled-table td {
+        border: 1px solid black; /* Border tiap sel */
+        padding: 8px;
+        text-align: left;
+    }
+    .styled-table th {
+        background-color: #f2f2f2;
     }
     </style>
     """,
