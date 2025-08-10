@@ -51,17 +51,18 @@ for col in ["Kelas", "Sumber Sheet"]:
     if col in filtered_df.columns:
         filtered_df = filtered_df.drop(columns=[col])
 
-# Urutkan berdasarkan nilai tertinggi
+# Urutkan berdasarkan nilai tertinggi (kolom "Rata-Rata")
 if "Rata-Rata" in filtered_df.columns:
     filtered_df = filtered_df.sort_values(by="Rata-Rata", ascending=False)
 
-# Pindahkan kolom Nama Unit supaya tidak di paling ujung
-if "Nama Unit" in filtered_df.columns:
-    cols = filtered_df.columns.tolist()
-    cols.insert(4, cols.pop(cols.index("Nama Unit")))  # pindahkan ke posisi index 1
-    filtered_df = filtered_df[cols]
+# Tambahkan kolom Ranking
+filtered_df.insert(0, "Ranking", range(1, len(filtered_df) + 1))
 
-# Reset index agar rapi
+# Atur urutan kolom
+kolom_urut = ["Ranking", "Instruktur", "Nama Diklat", "Mata Ajar", "Nama Unit", "Tahun", "Rata-Rata"]
+filtered_df = filtered_df[[kol for kol in kolom_urut if kol in filtered_df.columns]]
+
+# Reset index
 filtered_df.reset_index(drop=True, inplace=True)
 
 # Tampilkan hasil
