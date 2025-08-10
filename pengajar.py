@@ -1,76 +1,68 @@
 import streamlit as st
 import pandas as pd
 
-# =====================
-# KONFIGURASI TEMA PUTIH
-# =====================
-st.set_page_config(
-    page_title="Dashboard Pengajar Nilai Tertinggi",
-    layout="wide"
+# Konfigurasi halaman
+st.set_page_config(page_title="Dashboard Nilai Pengajar", layout="wide")
+
+# CSS untuk background putih
+st.markdown(
+    """
+    <style>
+        .stApp {
+            background-color: white;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
 )
 
-# CSS untuk memastikan background putih
-st.markdown("""
-    <style>
-    .stApp {
-        background-color: white;
-        color: black;
-    }
-    </style>
-""", unsafe_allow_html=True)
+st.title("📊 Dashboard Nilai Pengajar Tertinggi")
 
-# =====================
-# LOAD DATA
-# =====================
-# Ganti file ini dengan file Excel kamu
-df = pd.read_excel("Penilaian Gabung dengan Nama Unit.xlsx")
+# Upload file Excel
+uploaded_file = st.file_uploader("Unggah file Excel", type=["xlsx"])
+if uploaded_file is not None:
+    df = pd.read_excel(uploaded_file)
 
-# Pastikan kolom sesuai
-# Contoh kolom: Nama Diklat, Nama Unit, Mata Ajar, Pengajar, Rata-Rata
-# Ubah sesuai nama kolom sebenarnya di file Excel kamu
-df["Rata-Rata"] = pd.to_numeric(df["Rata-Rata"], errors="coerce")
+    # Pastikan kolom yang dibutuhkan ada
+    required_columns = ["Instruktur", "Nama Diklat", "Mata Ajar", "Nama Unit", "Tahun", "Rata-Rata"]
+    if not all(col in df.columns for col in required_columns):
+        st.error("Kolom yang diperlukan tidak ditemukan di file.")
+    else:
+        # Filter nilai maksimal 5
+        df = df[df["Rata-Rata"] <= 5]
 
-# =====================
-# FILTER DROPDOWN
-# =====================
-col1, col2, col3 = st.columns(3)
+        # Dropdown filter
+        nama_diklat = st.selectbox("Pilih Nama Diklat", ["Semua"] + sorted(df["Nama Diklat"].dropna().unique().tolist()))
+        nama_unit = st.selectbox("Pilih Nama Unit", ["Semua"] + sorted(df["Nama Unit"].dropna().unique().tolist()))
+        mata_ajar = st.selectbox("Pilih Mata Ajar", ["Semua"] + sorted(df["Mata Ajar"].dropna().unique().tolist()))
 
-# 1. Nama Diklat (tidak memfilter)
-with col1:
-    nama_diklat = st.selectbox(
-        "Nama Diklat",
-        sorted(df["Nama Diklat"].unique())
-    )
+        # Filter data
+        filtered_df = df.copy()
+        if nama_diklat != "Semua":
+            filtered_df = filtered_df[filtered_df["Nama Diklat"] == nama_diklat]
+        if nama_unit != "Semua":
+            filtered_df = filtered_df[filtered_df["Nama Unit"] == nama_unit]
+        if mata_ajar != "Semua":
+            filtered_df = filtered_df[filtered_df["Mata Ajar"] == mata_ajar]
 
-# 2. Nama Unit (memfilter)
-with col2:
-    unit_options = ["Semua"] + sorted(df["Nama Unit"].unique())
-    nama_unit = st.selectbox("Nama Unit", unit_options)
+        # Urutkan berdasarkan Rata-Rata tertinggi
+        filtered_df = filtered_df.sort_values(by="Rata-Rata", ascending=False)
 
-# 3. Mata Ajar (memfilter)
-with col3:
-    mata_ajar_options = ["Semua"] + sorted(df["Mata Ajar"].unique())
-    mata_ajar = st.selectbox("Mata Ajar", mata_ajar_options)
+        # Pilih kolom yang ditampilkan
+        show_df = filtered_df[["Instruktur", "Nama Diklat", "Mata Ajar", "Nama Unit", "Tahun", "Rata-Rata"]]
 
-# =====================
-# APLIKASI FILTER
-# =====================
-df_filtered = df.copy()
+        # Tampilkan tabel
+        st.dataframe(show_df, use_container_width=True)
 
-if nama_unit != "Semua":
-    df_filtered = df_filtered[df_filtered["Nama Unit"] == nama_unit]
+        # Download hasil
+        def convert_df(df):
+            return df.to_excel(index=False, engine='openpyxl')
 
-if mata_ajar != "Semua":
-    df_filtered = df_filtered[df_filtered["Mata Ajar"] == mata_ajar]
-
-# =====================
-# TAMPILKAN HASIL
-# =====================
-st.subheader(f"Pengajar Nilai Tertinggi - {nama_diklat}")
-
-if df_filtered.empty:
-    st.warning("Tidak ada data untuk filter ini.")
+        st.download_button(
+            label="📥 Unduh Hasil sebagai Excel",
+            data=convert_df(show_df),
+            file_name="nilai_pengajar_tertinggi.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
 else:
-    # Urutkan berdasarkan nilai rata-rata
-    df_top = df_filtered.sort_values("Rata-Rata", ascending=False).head(10)
-    st.dataframe(df_top, use_container_width=True)
+    st.info("Silakan unggah file Excel untuk memulai.")
