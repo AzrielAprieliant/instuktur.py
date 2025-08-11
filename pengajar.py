@@ -51,9 +51,7 @@ else:
 
     st.subheader("🏆 Pengajar Nilai Tertinggi")
     
-    df_no_index = show_df.reset_index(drop=True)
-    html_table = df_no_index.to_html(index=False, escape=False)
-    st.markdown(html_table, unsafe_allow_html=True)
+    st.dataframe(show_df.reset_index(drop=True))
 
     def convert_df(df):
         return df.to_excel(index=False, engine='openpyxl')
