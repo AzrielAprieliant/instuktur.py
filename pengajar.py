@@ -54,11 +54,11 @@ else:
     # Misalnya show_df sudah jadi
     show_df = show_df.reset_index(drop=True)  # Hilangkan index Pandas
 
-# Kalau ada kolom 'index' atau sisa hasil merge, drop juga
+    # Kalau ada kolom 'index' atau sisa hasil merge, drop juga
     if 'index' in show_df.columns:
     show_df = show_df.drop(columns=['index'])
 
-# Tampilkan langsung
+    # Tampilkan langsung
     st.dataframe(show_df)
 
 
