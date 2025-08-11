@@ -51,11 +51,10 @@ else:
 
     st.subheader("🏆 Pengajar Nilai Tertinggi")
     
+    # bikin index kosong
+    show_df.index = [""] * len(show_df)
+    st.dataframe(show_df, use_container_width=True)
    
-    st.dataframe(
-        show_df.reset_index(drop=True).style.hide(axis="index"),
-        use_container_width=True
-    )
 
     def convert_df(df):
         return df.to_excel(index=False, engine='openpyxl')
