@@ -51,17 +51,7 @@ else:
 
     st.subheader("🏆 Pengajar Nilai Tertinggi")
     
-    # Misalnya show_df sudah jadi
-    show_df = show_df.reset_index(drop=True)  # Hilangkan index Pandas
-
-    # Kalau ada kolom 'index' atau sisa hasil merge, drop juga
-    if 'index' in show_df.columns:
-        
-    show_df = show_df.drop(columns=['index'])
-
-    # Tampilkan langsung
-    st.dataframe(show_df)
-
+    st.dataframe(show_df.reset_index(drop=True))
 
     def convert_df(df):
         return df.to_excel(index=False, engine='openpyxl')
