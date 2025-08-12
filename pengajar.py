@@ -43,6 +43,10 @@ else:
     if mata_ajar != "Semua":
         df_filtered = df_filtered[df_filtered["Mata Ajar"] == mata_ajar]
 
+    df_filtered = df_filtered.drop_duplicates(
+    subset=["Instruktur", "Nama Diklat", "Mata Ajar", "Nama Unit", "Tahun", "Rata-Rata"]
+    )
+
     # Ranking
     df_filtered = df_filtered.sort_values(by="Rata-Rata", ascending=False).reset_index(drop=True)
     df_filtered.insert(0, "Ranking", range(1, len(df_filtered) + 1))
