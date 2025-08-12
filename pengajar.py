@@ -60,14 +60,3 @@ else:
 
     st.subheader("🏆 Pengajar Nilai Tertinggi")
     st.dataframe(show_df, use_container_width=True, hide_index=True) 
-
-    # Fungsi konversi ke Excel
-    def convert_df(df):
-        return df.to_excel(index=False, engine='openpyxl')
-
-    st.download_button(
-        label="📥 Unduh Hasil sebagai Excel",
-        data=convert_df(show_df),
-        file_name="nilai_pengajar_tertinggi.xlsx",
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
