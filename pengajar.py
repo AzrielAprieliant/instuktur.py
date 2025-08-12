@@ -59,7 +59,7 @@ else:
     show_df = df_filtered[["Ranking", "Instruktur", "Nama Diklat", "Mata Ajar", "Nama Unit", "Tahun", "Rata-Rata"]]
 
     st.subheader("🏆 Pengajar Nilai Tertinggi")
-    st.dataframe(show_df, use_container_width=True, hide_index=True)
+    st.table(show_df)  
 
     # Fungsi konversi ke Excel
     def convert_df(df):
