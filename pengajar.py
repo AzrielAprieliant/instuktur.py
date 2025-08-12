@@ -19,7 +19,7 @@ st.markdown(
 
 st.title("📊 Dashboard Nilai Pengajar Tertinggi")
 
-file_path = "Salinan dari data pegawai bpkp per 23 juli 2025.xlsx"
+file_path = "Penilaian Gabung dengan Nama Unit.xlsx"
 df = pd.read_excel(file_path)
 
 required_columns = ["Instruktur", "Nama Diklat", "Mata Ajar", "Nama Unit", "Tahun", "Rata-Rata"]
