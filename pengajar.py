@@ -23,6 +23,8 @@ st.title("📊 Dashboard Nilai Pengajar Tertinggi")
 file_path = "Data_Gabung.xlsx"
 df = pd.read_excel(file_path)
 
+df["Nama Unit"] = df["Nama Unit"].fillna("Pensiun")
+
 required_columns = ["Instruktur", "Nama Diklat", "Mata Ajar", "Nama Unit", "Tahun", "Rata-Rata"]
 if not all(col in df.columns for col in required_columns):
     st.error("Kolom yang diperlukan tidak ditemukan di file.")
