@@ -36,10 +36,9 @@ st.markdown("""
 ---
 
 ## 1. **Dropdown Filter**
-- **Grup Diklat** → Memilih kelompok diklat yang serupa.  
-- **Mata Ajar** → Memilih mata ajar spesifik dari diklat yang dipilih.  
-- **Nama Unit** → Memilih unit kerja instruktur (jika Data Unit kosong, otomatis tertulis "Pensiun").  
-
+- **Nama Unit** → Memilih unit kerja instruktur (jika Data Unit kosong, otomatis tertulis "Pensiun"). 
+- **Nama Diklat** → Memilih nama diklat.  
+- **Mata Ajar** → Memilih mata ajar spesifik.
 ---
 
 ## 2. **Ikon di Pojok Kanan Tabel**
