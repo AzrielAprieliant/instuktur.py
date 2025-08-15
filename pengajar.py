@@ -61,6 +61,14 @@ else:
     st.subheader("🏆 Tabel Pengajar Nilai Tertinggi")
     st.dataframe(show_df, use_container_width=True, hide_index=True)
 
+    st.markdown("""
+    <style>
+    div.stDownloadButton > button {
+        color: white !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
+    
 # === Export ke Excel ===
     output = BytesIO()
     with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
