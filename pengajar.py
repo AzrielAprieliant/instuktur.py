@@ -36,7 +36,7 @@ st.markdown("""
 ---
 ## 1. **Dropdown**
 - **Nama Unit** → Data berdasarkan unit kerja instruktur.  
-  - Jika Data Unit kosong, otomatis diisi **"Pensiun"**.  
+  - Jika Data Nama Unit kosong, otomatis diisi **"Pensiun"**.  
   - Pilih **"Semua"** untuk menampilkan semua unit kerja.
 - **Nama Diklat** → Data berdasarkan nama diklat.  
   - Pilih **"Semua"** untuk menampilkan semua diklat.
