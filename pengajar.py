@@ -34,7 +34,7 @@ st.markdown("""
 # 📝 **Panduan Penggunaan Dashboard**
 
 ---
-## 1. **Dropdown Filter**
+## 1. **Dropdown**
 - **Nama Unit** → Data berdasarkan unit kerja instruktur.  
   - Jika Data Unit kosong, otomatis diisi **"Pensiun"**.  
   - Pilih **"Semua"** untuk menampilkan semua unit kerja.
