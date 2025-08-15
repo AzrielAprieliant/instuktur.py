@@ -20,20 +20,20 @@ st.markdown(
 
 st.title("📊 Dashboard Nilai Pengajar Tertinggi")
 
-st.markdown(
-    """
-<div style='background-color:#f0f8ff; padding:15px; border-radius:10px; border: 1px solid #d0e3ff;'>
-<h3 style='color:#2a4d69;'>📌 Panduan Penggunaan</h3>
-<ol style='color:#2a4d69;'>
-    <li>Pilih <b>Nama Diklat</b>, <b>Mata Ajar</b>, atau <b>Nama Unit</b> dari menu di sebelah kiri.</li>
-    <li>Setiap dropdown <b>tidak saling mengunci</b>, jadi pilihan di bawah tetap menampilkan semua opsi.</li>
-    <li>Klik tombol <b>Unduh Data</b> untuk menyimpan hasil filter dalam format Excel.</li>
-    <li>Nilai kosong pada kolom <b>Nama Unit</b> otomatis diisi dengan <b style='color:red;'>Pensiun</b>.</li>
-</ol>
-</div>
-""",
-    unsafe_allow_html=True
-)
+st.markdown("""
+## 📝 Panduan Penggunaan Dashboard
+
+1. **Dropdown Filter:**
+   - **Grup Diklat** → Memilih kelompok diklat yang serupa.
+   - **Mata Ajar** → Memilih mata ajar spesifik dari diklat yang dipilih.
+   - **Nama Unit** → Memilih unit kerja instruktur (jika Data Unit kosong, otomatis tertulis "Pensiun").
+
+2. **Ikon di Pojok Kanan Tabel:**
+   - 👁 **View** → Mengatur tampilan tabel (grid, compact, dll).
+   - ⬇ **Download** → Mengunduh data yang sedang ditampilkan dalam format CSV.
+   - 🔍 **Search** → Mencari kata atau angka di dalam tabel.
+   - ⛶ **Fullscreen** → Membuka tabel dalam mode layar penuh.
+""")
 
 file_path = "Data_Gabung.xlsx"
 df = pd.read_excel(file_path)
