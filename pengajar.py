@@ -61,42 +61,6 @@ else:
     st.subheader("🏆 Tabel Pengajar Nilai Tertinggi")
     st.dataframe(show_df, use_container_width=True, hide_index=True)
 
-# Buat fungsi konversi ke Excel BytesIO
-def to_excel(df):
-    output = BytesIO()
-    with pd.ExcelWriter(output, engine="xlsxwriter") as writer:
-        df.to_excel(writer, index=False, sheet_name="Data")
-        worksheet = writer.sheets["Data"]
-        for i, col in enumerate(df.columns):
-            column_len = max(df[col].astype(str).map(len).max(), len(col)) + 2
-            worksheet.set_column(i, i, column_len)
-    output.seek(0)
-    return output
-
-# Konversi data ke Excel
-excel_data = to_excel(show_df)
-
-# CSS untuk ubah warna teks tombol download jadi putih
-st.markdown("""
-    <style>
-    div[data-testid="stDownloadButton"] button {
-        color: white !important;
-        background-color: #4CAF50 !important;
-        border-radius: 8px !important;
-        font-weight: bold !important;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
-# Tombol download
-st.download_button(
-    label="📥 Download Data (Excel)",
-    data=excel_data,
-    file_name="data_instruktur.xlsx",
-    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-)
-
-
 
 st.markdown("""
 <style>
