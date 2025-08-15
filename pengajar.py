@@ -20,6 +20,21 @@ st.markdown(
 
 st.title("📊 Dashboard Nilai Pengajar Tertinggi")
 
+st.markdown(
+    """
+<div style='background-color:#f0f8ff; padding:15px; border-radius:10px; border: 1px solid #d0e3ff;'>
+<h3 style='color:#2a4d69;'>📌 Panduan Penggunaan</h3>
+<ol style='color:#2a4d69;'>
+    <li>Pilih <b>Nama Diklat</b>, <b>Mata Ajar</b>, atau <b>Nama Unit</b> dari menu di sebelah kiri.</li>
+    <li>Setiap dropdown <b>tidak saling mengunci</b>, jadi pilihan di bawah tetap menampilkan semua opsi.</li>
+    <li>Klik tombol <b>Unduh Data</b> untuk menyimpan hasil filter dalam format Excel.</li>
+    <li>Nilai kosong pada kolom <b>Nama Unit</b> otomatis diisi dengan <b style='color:red;'>Pensiun</b>.</li>
+</ol>
+</div>
+""",
+    unsafe_allow_html=True
+)
+
 file_path = "Data_Gabung.xlsx"
 df = pd.read_excel(file_path)
 
