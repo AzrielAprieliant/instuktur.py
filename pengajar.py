@@ -21,6 +21,16 @@ st.markdown(
 st.title("📊 Dashboard Nilai Pengajar Tertinggi")
 
 st.markdown("""
+<style>
+.panduan {
+    color: black;
+    font-size: 16px;
+    line-height: 1.6;
+}
+</style>
+
+<div class="panduan">
+
 # 📝 **Panduan Penggunaan Dashboard**
 
 ---
@@ -37,7 +47,9 @@ st.markdown("""
 - ⬇ **Download** → Mengunduh data yang sedang ditampilkan dalam format CSV.  
 - 🔍 **Search** → Mencari kata atau angka di dalam tabel.  
 - ⛶ **Fullscreen** → Membuka tabel dalam mode layar penuh.  
-""")
+
+</div>
+""", unsafe_allow_html=True)
 
 
 file_path = "Data_Gabung.xlsx"
