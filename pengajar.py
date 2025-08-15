@@ -91,24 +91,3 @@ st.markdown("""
 
 </div>
 """, unsafe_allow_html=True)
-
-data = {
-    "Nama Diklat": ["Pelatihan A", "Pelatihan B", "Pelatihan, C"],
-    "Mata Ajar": ["Audit", "Pengawasan", "Manajemen"],
-    "Nilai": [85, 90, 88]
-}
-df = pd.DataFrame(data)
-
-# Simpan dataframe ke buffer Excel
-buffer = io.BytesIO()
-df.to_excel(buffer, index=False)
-buffer.seek(0)
-
-# Tombol download
-st.download_button(
-    label="📥 Download Data (Excel)",
-    data=buffer,
-    file_name="data_instruktur.xlsx",
-    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-)
-
