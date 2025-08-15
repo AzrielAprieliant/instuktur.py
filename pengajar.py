@@ -24,7 +24,7 @@ st.markdown("""
 <style>
 .panduan, .panduan h1, .panduan h2, .panduan h3, .panduan h4, .panduan p, .panduan li {
     color: black !important;
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.6;
 }
 </style>
