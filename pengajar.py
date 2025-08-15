@@ -32,7 +32,6 @@ st.markdown("""
 <div class="panduan">
 
 # 📝 **Panduan Penggunaan Dashboard**
----
 ## 1. **Dropdown**
 - **Nama Unit** → Data berdasarkan unit kerja instruktur.  
   - Jika Data Nama Unit kosong, otomatis diisi **"Pensiun"**.  
