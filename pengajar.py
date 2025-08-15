@@ -61,21 +61,23 @@ else:
     st.subheader("🏆 Tabel Pengajar Nilai Tertinggi")
     st.dataframe(show_df, use_container_width=True, hide_index=True)
 
-    st.markdown("""
+# Tambahkan CSS agar teks tombol download jadi putih
+st.markdown("""
     <style>
     div.stDownloadButton > button {
         color: white !important;
     }
     </style>
-    """, unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
-    # Tombol download
-    st.download_button(
+# Tombol download
+st.download_button(
     label="📥 Download Data (Excel)",
     data=excel_data,
     file_name="data_instruktur.xlsx",
     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
+)
+
 
 st.markdown("""
 <style>
