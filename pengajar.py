@@ -35,12 +35,12 @@ st.markdown("""
 
 ---
 ## 1. **Dropdown Filter**
-- **Nama Unit** → Menyaring data berdasarkan unit kerja instruktur.  
-  - Jika kosong di data, otomatis diisi **"Pensiun"**.  
+- **Nama Unit** → data berdasarkan unit kerja instruktur.  
+  - Jika Data Unit kosong, otomatis diisi **"Pensiun"**.  
   - Pilih **"Semua"** untuk menampilkan semua unit kerja.
-- **Nama Diklat** → Menyaring data berdasarkan nama diklat.  
+- **Nama Diklat** → Data berdasarkan nama diklat.  
   - Pilih **"Semua"** untuk menampilkan semua diklat.
-- **Mata Ajar** → Menyaring data berdasarkan mata ajar dari diklat yang dipilih.  
+- **Mata Ajar** → Data berdasarkan mata ajar.  
   - Pilih **"Semua"** untuk menampilkan semua mata ajar.
 
 
