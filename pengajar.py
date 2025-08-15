@@ -62,17 +62,35 @@ else:
     st.dataframe(show_df, use_container_width=True, hide_index=True)
 
 # === Export ke Excel ===
-    output = BytesIO()
-    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
-        show_df.to_excel(writer, index=False, sheet_name="Nilai Pengajar")
-    output.seek(0)
+output = BytesIO()
+with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+    show_df.to_excel(writer, index=False, sheet_name="Nilai Pengajar")
+output.seek(0)
 
-    st.download_button(
-        label="📥 Download Excel",
-        data=output,
-        file_name="nilai_pengajar.xlsx",
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
+# CSS untuk tombol download
+st.markdown("""
+    <style>
+    div.stDownloadButton > button {
+        background-color: #0099ff !important; /* biru */
+        color: white !important; /* teks putih */
+        border-radius: 5px;
+        padding: 0.6em 1.2em;
+        font-weight: bold;
+    }
+    div.stDownloadButton > button:hover {
+        background-color: #007acc !important;
+        color: white !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+# Tombol download
+st.download_button(
+    label="📥 Download Excel",
+    data=output,
+    file_name="nilai_pengajar.xlsx",
+    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+)
 
 
 st.markdown("""
