@@ -61,6 +61,18 @@ else:
     st.subheader("🏆 Tabel Pengajar Nilai Tertinggi")
     st.dataframe(show_df, use_container_width=True, hide_index=True)
 
+  # === DOWNLOAD BUTTON EXCEL ===
+    output = BytesIO()
+    show_df.to_excel(output, index=False)
+    output.seek(0)
+
+    st.download_button(
+        label="📥 Download Data (Excel)",
+        data=output,
+        file_name="nilai_pengajar.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+
 st.markdown("""
 <style>
 .panduan, .panduan h1, .panduan h2, .panduan h3, .panduan h4, .panduan p, .panduan li {
