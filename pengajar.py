@@ -34,12 +34,15 @@ st.markdown("""
 # 📝 **Panduan Penggunaan Dashboard**
 
 ---
-
 ## 1. **Dropdown Filter**
-- **Nama Unit** → Memilih unit kerja instruktur (jika Data Unit kosong, otomatis tertulis "Pensiun"). 
-- **Nama Diklat** → Memilih nama diklat.  
-- **Mata Ajar** → Memilih mata ajar spesifik.
----
+- **Nama Unit** → Menyaring data berdasarkan unit kerja instruktur.  
+  - Jika kosong di data, otomatis diisi **"Pensiun"**.  
+  - Pilih **"Semua"** untuk menampilkan semua unit kerja.
+- **Nama Diklat** → Menyaring data berdasarkan nama diklat.  
+  - Pilih **"Semua"** untuk menampilkan semua diklat.
+- **Mata Ajar** → Menyaring data berdasarkan mata ajar dari diklat yang dipilih.  
+  - Pilih **"Semua"** untuk menampilkan semua mata ajar.
+
 
 ## 2. **Ikon di Pojok Kanan Tabel**
 - 👁 **View** → Mengatur tampilan tabel (grid, compact, dll).  
