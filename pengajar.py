@@ -20,36 +20,6 @@ st.markdown(
 
 st.title("📊 Dashboard Nilai Pengajar Tertinggi")
 
-st.markdown("""
-<style>
-.panduan, .panduan h1, .panduan h2, .panduan h3, .panduan h4, .panduan p, .panduan li {
-    color: black !important;
-    font-size: 16px;
-    line-height: 1.6;
-}
-</style>
-
-<div class="panduan">
-
-# 📝 **Panduan Penggunaan Dashboard**
-## 1. **Dropdown**
-- **Nama Unit** → Data berdasarkan unit kerja instruktur.  
-  - Jika Data Nama Unit kosong, otomatis diisi **"Pensiun"**.  
-  - Pilih **"Semua"** untuk menampilkan semua unit kerja.
-- **Nama Diklat** → Data berdasarkan nama diklat.  
-  - Pilih **"Semua"** untuk menampilkan semua diklat.
-- **Mata Ajar** → Data berdasarkan mata ajar.  
-  - Pilih **"Semua"** untuk menampilkan semua mata ajar.
-
-
-## 2. **Ikon di Pojok Kanan Tabel**
-- 👁 **View** → Mengatur tampilan tabel (Nama Unit, Nama Diklat, dll).  
-- ⬇ **Download** → Mengunduh data yang sedang ditampilkan dalam format CSV.  
-- 🔍 **Search** → Mencari kata atau angka di dalam tabel.  
-- ⛶ **Fullscreen** → Membuka tabel dalam mode layar penuh.  
-
-</div>
-""", unsafe_allow_html=True)
 
 
 
@@ -90,3 +60,35 @@ else:
 
     st.subheader("🏆 Tabel Pengajar Nilai Tertinggi")
     st.dataframe(show_df, use_container_width=True, hide_index=True)
+
+st.markdown("""
+<style>
+.panduan, .panduan h1, .panduan h2, .panduan h3, .panduan h4, .panduan p, .panduan li {
+    color: black !important;
+    font-size: 16px;
+    line-height: 1.6;
+}
+</style>
+
+<div class="panduan">
+
+# 📝 **Panduan Penggunaan Dashboard**
+## 1. **Dropdown**
+- **Nama Unit** → Data berdasarkan unit kerja instruktur.  
+  - Jika Data Nama Unit kosong, otomatis diisi **"Pensiun"**.  
+  - Pilih **"Semua"** untuk menampilkan semua unit kerja.
+- **Nama Diklat** → Data berdasarkan nama diklat.  
+  - Pilih **"Semua"** untuk menampilkan semua diklat.
+- **Mata Ajar** → Data berdasarkan mata ajar.  
+  - Pilih **"Semua"** untuk menampilkan semua mata ajar.
+
+
+## 2. **Ikon di Pojok Kanan Tabel**
+- 👁 **View** → Mengatur tampilan tabel (Nama Unit, Nama Diklat, dll).  
+- ⬇ **Download** → Mengunduh data yang sedang ditampilkan dalam format CSV.  
+- 🔍 **Search** → Mencari kata atau angka di dalam tabel.  
+- ⛶ **Fullscreen** → Membuka tabel dalam mode layar penuh.  
+
+</div>
+""", unsafe_allow_html=True)
+
