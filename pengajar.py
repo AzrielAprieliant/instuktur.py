@@ -24,7 +24,7 @@ st.markdown("""
 <style>
 .panduan {
     color: black;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 1.6;
 }
 </style>
