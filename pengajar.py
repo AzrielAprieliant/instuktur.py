@@ -117,7 +117,7 @@ st.markdown("""
 
 ## 2. **Ikon di Pojok Kanan Tabel**
 - 👁 **View** → Mengatur tampilan tabel (Nama Unit, Nama Diklat, dll).  
-- ⬇ **Download** → Mengunduh data yang sedang ditampilkan dalam format CSV.  
+- 📥 **Download** → Mengunduh data yang sedang ditampilkan dalam format CSV.  
 - 🔍 **Search** → Mencari kata atau angka di dalam tabel.  
 - ⛶ **Fullscreen** → Membuka tabel dalam mode layar penuh.  
 
