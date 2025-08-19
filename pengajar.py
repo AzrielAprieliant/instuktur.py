@@ -34,12 +34,12 @@ if not all(col in df.columns for col in required_columns):
 else:
     df = df[df["Rata-Rata"] <= 5]
 
-    # Semua dropdown ambil opsi dari df asli (tanpa filter)
+    
     nama_unit = st.selectbox("Pilih Nama Unit", ["Semua"] + sorted(df["Nama Unit"].dropna().unique().tolist()))
     nama_diklat = st.selectbox("Pilih Nama Diklat", ["Semua"] + sorted(df["Nama Diklat"].dropna().unique().tolist()))
     mata_ajar = st.selectbox("Pilih Mata Ajar", ["Semua"] + sorted(df["Mata Ajar"].dropna().unique().tolist()))
 
-    # Filter data hanya sekali di sini
+    
     df_filtered = df.copy()
     if nama_unit != "Semua":
         df_filtered = df_filtered[df_filtered["Nama Unit"] == nama_unit]
@@ -52,7 +52,7 @@ else:
     subset=["Instruktur", "Nama Diklat", "Mata Ajar", "Nama Unit", "Tahun", "Rata-Rata"]
     )
 
-    # Ranking
+    
     df_filtered = df_filtered.sort_values(by="Rata-Rata", ascending=False).reset_index(drop=True)
     df_filtered.insert(0, "Ranking", range(1, len(df_filtered) + 1))
 
@@ -61,13 +61,13 @@ else:
     st.subheader("🏆 Tabel Pengajar Nilai Tertinggi")
     st.dataframe(show_df, use_container_width=True, hide_index=True)
 
-# === Export ke Excel ===
+
 output = BytesIO()
 with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
     show_df.to_excel(writer, index=False, sheet_name="Nilai Pengajar")
 output.seek(0)
 
-# CSS untuk tombol download
+
 st.markdown("""
     <style>
     div.stDownloadButton > button {
@@ -84,7 +84,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Tombol download
+
 st.download_button(
     label="📥 Download Excel",
     data=output,
